@@ -28,7 +28,11 @@ class TestModel(BaseModel):
     def set_input(self, input):
         # we need to use single_dataset mode
         input_A = input['A']
-        #self.input_A.resize_(input_A.size()).copy_(input_A) #resnet
+        #self.input_A.resize_(input_A.size()).copy_(input_A) #torch version
+        temp = self.input_A.clone()
+        temp.resize_(input_A.size())
+        temp.copy_(input_A)
+        self.input_A = temp
         self.image_paths = input['A_paths']
 
     def test(self):
